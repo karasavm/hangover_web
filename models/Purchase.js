@@ -10,8 +10,14 @@ var paymentSchema = new mongoose.Schema({
 	// votes: [voteSchema]
 });
 
+var memberSchema = new mongoose.Schema({ 
+	name: String
+	// votes: [voteSchema]
+});
+
 // Document schema for polls
 exports.PurchaseSchema = new mongoose.Schema({
 	title: { type: String, required: true, unique: true },
-	payments: [paymentSchema]
+	payments: [paymentSchema],
+	members: [memberSchema]
 });

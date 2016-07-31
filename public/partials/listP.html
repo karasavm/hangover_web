@@ -17,10 +17,12 @@
 	<ul ng-switch-when="0">
 		<li><em>No polls in databases. Would you like to <a href="#/newP">create one</a>?</li>
 	</ul>
-	<ul ng-switch-default>
+	<ol ng-switch-default>
 		<li ng-repeat="purchase in purchases | filter:query">
-			<a href="#/purchase/{{purchase._id}}">{{purchase.title}}</a>
+			<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+			<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></a>
+			<a href="#/purchase/{{purchase._id}}">{{purchase.title}}</a> 
 		</li>
-	</ul>
+	</ol>
 </div>
 <p>&nbsp;</p>
