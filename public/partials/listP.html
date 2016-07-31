@@ -1,0 +1,26 @@
+<div class="page-header">
+	<h1>Purchase List</h1>
+</div>
+<div class="row">
+	<div class="col-xs-5">
+		<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Purchase</a>
+	</div>
+	<div class="col-xs-7">
+		<input type="text" class="form-control" ng-model="query" placeholder="Search for a Purchase">
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12"><hr></div>
+</div>
+
+<div class="row" ng-switch on="purchases.length">
+	<ul ng-switch-when="0">
+		<li><em>No polls in databases. Would you like to <a href="#/newP">create one</a>?</li>
+	</ul>
+	<ul ng-switch-default>
+		<li ng-repeat="purchase in purchases | filter:query">
+			<a href="#/purchase/{{purchase._id}}">{{purchase.title}}</a>
+		</li>
+	</ul>
+</div>
+<p>&nbsp;</p>
