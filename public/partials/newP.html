@@ -2,7 +2,7 @@
 	<h1>Create New Purchase</h1>
 </div>
 
-<form role="form" ng-submit="createPoll()">
+<!-- <form role="form" ng-submit="createPoll()">
 	<div class="form-group">
 		<label for="purchaseTitle">Title</label>
 		<input type="text" ng-model="purchase.title" class="form-control" id="purchaseTitel" placeholder="Enter purchase Title">
@@ -34,4 +34,49 @@
 	</div>
 	
 	<p>&nbsp;</p>
+</form> -->
+
+<form role="form" ng-submit="createPurchase()">
+	<div class="form-group">
+		<label for="purchaseTitle">Title</label>
+		<input type="text" ng-model="purchase.title" class="form-control" id="purchaseTitel" placeholder="Enter purchase Title">
+	</div>
+	
+	<div class="form-group">
+		<label><em>Payments</em></label>
+
+		<div ng-repeat="payment in purchase.payments">
+			<label> {{payment.name}}</label>
+			<div class="input-group">
+				
+			   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
+			   <span class="input-group-btn">
+			        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"></button>
+			   </span>
+			</div>
+			 
+        </div>
+	    </div>
+
+	</div>		
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<button type="button" class="btn btn-default" ng-click="resetPayments()"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+		</div>
+	</div>
+	
+	<p><hr></p>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<a href="#/purchases" class="btn btn-default" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back to Purchase List</a>
+		</div>
+		<div class="col-xs-6">
+			<button class="btn btn-primary pull-right" type="submit">Create Purchase &raquo;</button>
+		</div>
+	</div>
+	
+	<p>&nbsp;</p>
 </form>
+

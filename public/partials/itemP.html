@@ -25,21 +25,34 @@
 		<label for="purchaseTitle">Title</label>
 		<input type="text" ng-model="purchase.title" class="form-control" id="purchaseTitel" placeholder="Enter purchase Title">
 	</div>
+	
+
+
 
 	<div class="form-group">
-		<label>Payments</label>
+		<label><em>Payments</em></label>
+
 		<div ng-repeat="payment in purchase.payments">
-			<input type="text" ng-model="payment.name" class="form-control" placeholder="Enter name {{$index+1}}">
-			<input type="text" ng-model="payment.amount" class="form-control" placeholder="Enter amount {{$index+1}} text"><br>
-		</div>
+			<label> {{payment.name}}</label>
+			<div class="input-group">
+				
+			   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
+			   <span class="input-group-btn">
+			        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"></button>
+			   </span>
+			</div>
+			 
+        </div>
+	    </div>
+
 	</div>		
-	
+
 	<div class="row">
 		<div class="col-xs-12">
-			<button type="button" class="btn btn-default" ng-click="addChoice()"><span class="glyphicon glyphicon-plus"></span> Add another</button>
+			<button type="button" class="btn btn-default" ng-click="addRestMembers()"><span class="glyphicon glyphicon-plus"></span> Rest Members</button>
 		</div>
 	</div>
-	
+
 	<p><hr></p>
 	
 	<div class="row">
@@ -49,7 +62,7 @@
 		<div class="col-xs-6">
 			<button class="btn btn-primary pull-right" type="submit">Update Purchase &raquo;</button>
 		</div>
-	</div>
+	</div> 
 	
 	<p>&nbsp;</p>
 </form>

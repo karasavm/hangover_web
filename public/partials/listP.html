@@ -3,10 +3,10 @@
 </div>
 <div class="row">
 	<div class="col-xs-5">
-		<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Purchase</a>
+		<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Purchase</a>
 	</div>
 	<div class="col-xs-5">
-		<a href="#/member" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Members</a>
+		<a href="#/member" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Members</a>
 	</div>
 	<!-- 
 	<div class="col-xs-7">
@@ -20,7 +20,7 @@
 
 <div class="row" ng-switch on="purchases.length">
 	<ul ng-switch-when="0">
-		<li><em>No purchases in database. Would you like to <a href="#/newP">create one</a>?</li>
+		<li><em>No purchases yet.</li>
 	</ul>
 	<ol ng-switch-default>
 
