@@ -59,7 +59,7 @@ function PurchaseListCtrl($scope, Purchase) {
 		})
 	}
 	$scope.setBalanceColor = function(v){
-		console.log("xrwwww "+v)
+		
 		if (v < 0)
 			return {color: "red"}
 		else
@@ -76,7 +76,7 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 	$scope.updatePurchase = function(){
 		
 		purchase = $scope.purchase
-		console.log(purchase)
+		
 		if(purchase.title.length > 0) {
 		// 	// Loop through the choices, make sure at least two 
 			if (purchase.payments.length >= 2){
@@ -271,7 +271,7 @@ function MemberListCtrl($scope, $location, Member, Purchase){
 
 
 		if (memberId){
-			console.log("UPARXEI")
+			
 			var purchases = Purchase.query(function(data){
 				
 				var found = false;
@@ -295,10 +295,10 @@ function MemberListCtrl($scope, $location, Member, Purchase){
 						name: memberName,
 						_id: memberId
 					});
-					console.log(member)
+					
 					member.$remove({_id: memberId}, function(p, resp){
 						if (!p.error){
-							console.log("DONEEE")
+							
 							$scope.members = $scope.members.filter(function(v){return v.name != memberName})
 						}
 					})
@@ -309,7 +309,7 @@ function MemberListCtrl($scope, $location, Member, Purchase){
 			})
 		} else {
 
-			console.log("DENNN  UPARXEI")
+			
 			$scope.members = $scope.members.filter(function(v){return v.name != memberName})
 		}
 	}
