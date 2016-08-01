@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1>View Purchase</h1>
+	<h1>Purchase <em> ''{{purchase.title}}''</em></h1>
 </div>
 <!-- <div class="well well-lg">
 	<strong>Title</strong><br>{{purchase.title}}
@@ -38,7 +38,7 @@
 				
 			   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
 			   <span class="input-group-btn">
-			        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"></button>
+			        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
 			   </span>
 			</div>
 			 
@@ -60,7 +60,7 @@
 			<a href="#/purchases" class="btn btn-default" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back to Purchase List</a>
 		</div>
 		<div class="col-xs-6">
-			<button class="btn btn-primary pull-right" type="submit">Update Purchase &raquo;</button>
+			<button class="btn btn-primary pull-right" type="submit">Save &raquo;</button>
 		</div>
 	</div> 
 	

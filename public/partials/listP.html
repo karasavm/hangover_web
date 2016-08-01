@@ -1,35 +1,96 @@
 <div class="page-header">
 	<h1>Purchase List</h1>
 </div>
+
 <div class="row">
-	<div class="col-xs-5">
-		<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Purchase</a>
-	</div>
-	<div class="col-xs-5">
-		<a href="#/member" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Members</a>
-	</div>
-	<!-- 
-	<div class="col-xs-7">
-		<input type="text" class="form-control" ng-model="query" placeholder="Search for a Purchase">
-	</div> -->
+  <div class="row-height">
+    
+    <div class="col-xs-5 col-height col-top">
+      <div class="inside">
+        <div class="content">
+        	<a href="#/newP" class="btn btn-default pull-left"><span class="glyphicon glyphicon-plus"></span> Purchase</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4 col-height col-middle">
+      <div class="inside">
+        <div class="content">
+        	<button type="button" class="btn btn-info center" data-toggle="collapse" data-target="#demo">Debts </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3 col-height col-bottom">
+      <div class="inside">
+        <div class="content">
+        	<a href="#/member" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Members</a>
+        </div>
+      </div>
+    </div>
+   </div>
 </div>
+
 <div class="row">
 	<div class="col-xs-12"><hr></div>
 </div>
 
 
+
+<div id="demo" class="collapse">
+		<div class="well well-lg">
+		<!-- table ng-table="vm.tableParams" class="table" show-filter="true"> -->
+		    
+		    <table class="table">
+		    <thead>
+		      <tr>
+		        <th>Name</th>
+		        <th>Balance (euros)</th>
+		        
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="(key, value) in memberCost">
+		        <td>{{key}}</td>
+		        <td>{{value}}</td>
+		        
+		      </tr>
+		    </tbody>
+		    <thead>
+		      <tr>
+		        <th> Total Expenses: <em>{{totalCost}} euros</em></th>
+		        <th></th>
+		        
+		      </tr>
+		    </thead>
+		  </table>
+		</div>
+</div>
+
+
 <div class="row" ng-switch on="purchases.length">
 	<ul ng-switch-when="0">
-		<li><em>No purchases yet.</li>
+		
 	</ul>
 	<ol ng-switch-default>
 
+		<div class="input-group">
 		<li ng-repeat="purchase in purchases | filter:query">
-			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
-			<button type="button" class="btn btn-default" ng-click="removePurchase(purchase._id)"><span class="glyphicon glyphicon-minus"></span></button>
+			
+			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> </a>
+			<button type="button" class="btn btn-default" ng-click="removePurchase(purchase._id)"><span class="glyphicon glyphicon-minus"></span> </button>
 		
-			<b>{{purchase.title}}</b> 
+			<b>{{purchase.title}} - <em>{{sumPurchases[$index]}} euros</em></b> 
+			
 		</li>
+		</div>
+		<!-- <div class="input-group">
+							
+						   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
+						   <span class="input-group-btn">
+						        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
+						   </span>
+		</div> -->
+
+
 	</ol>
 </div>
 <p>&nbsp;</p>

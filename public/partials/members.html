@@ -22,14 +22,25 @@
 <form role="form" ng-submit="updateMembers()">
 	
 	
+	
 
 	<div class="form-group">
-		<!-- <label>Members</label> -->
 		<div ng-repeat="member in members">
 			<label>Member {{$index+1}}</label>
-			<input type="text" ng-model="member.name" class="form-control" placeholder="Enter member name">
-		</div>
+			<div class="input-group">
+				
+			   <input type="text" class="form-control" ng-model="member.name" placeholder="Insert name">
+			   <span class="input-group-btn">
+			        <button class="btn btn-default" type="button" ng-click="removeMember(member.name, member._id)"><span class="glyphicon glyphicon-minus"> Delete</button>
+			   </span>
+			</div>
+			 
+        </div>
+	    </div>
+
 	</div>		
+
+
 	
 	<div class="row">
 		<div class="col-xs-12">
@@ -44,7 +55,7 @@
 			<a href="#/purchases" class="btn btn-default" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back to Purchase List</a>
 		</div>
 		<div class="col-xs-6">
-			<button class="btn btn-primary pull-right" type="submit">Update Members &raquo;</button>
+			<button class="btn btn-primary pull-right" type="submit">Save &raquo;</button>
 		</div>
 	</div>
 	

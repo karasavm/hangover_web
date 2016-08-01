@@ -28,11 +28,11 @@ exports.list = function(req, res) {
 	// Query Mongo for polls, just get back the question text
 	Poll.find({}, 'question', function(error, polls) {
 		res.json(polls);
-	});
+	});	
 };
 exports.listP = function(req, res) {
 	// Query Mongo for polls, just get back the question text
-	Purchase.find({}, 'title', function(error, purchases) {
+	Purchase.find({}, function(error, purchases) {
 		res.json(purchases);
 	});
 };
@@ -200,6 +200,21 @@ exports.updateMember = function(req, res, next){
 			return next(err);
 		}
 		res.json({message: "ok"})	
+	})
+	
+}
+
+exports.deleteMember = function(req, res, next){
+	
+	console.log(req.query._id)
+	Member.remove({_id: req.query._id}, function(err){
+		if (err){
+			console.log(err)
+			return next(err)
+		} else{
+			res.json({message: "ok"})
+		}
+		
 	})
 	
 }

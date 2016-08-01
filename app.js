@@ -42,6 +42,7 @@ app.post('/purchases', routes.createP);
 app.post('/members', routes.createMember);
 app.get('/members', routes.listMember);
 app.put('/members', routes.updateMember);
+app.del('/members', routes.deleteMember);
 // app.post('/vote', routes.vote);
 
 

@@ -1,14 +1,58 @@
 
 function PurchaseListCtrl($scope, Purchase) {
 
-	$scope.purchases = Purchase.query();
+	$scope.isCollapsed = false;
+
+	var metricsSetter = function(){
+		var purchases = $scope.purchases;
+		
+		var sumPurchases = [];
+		var totalCost = 0;
+		var memberCost = {};
+
+		for (var i in purchases){
+			var sum = 0;
+			for (var j in purchases[i].payments){
+				sum += purchases[i].payments[j].amount
+				memberCost[purchases[i].payments[j].name] = 0
+			}
+			sumPurchases.push(sum)
+			totalCost += sum
+		}
+		
+		for (var i in purchases){
+			n = purchases[i].payments.length
+			portion = sumPurchases[i]/n
+			
+			for (var j in purchases[i].payments){
+				
+				
+				member = purchases[i].payments[j].name
+				memberCost[member] += purchases[i].payments[j].amount - portion  
+		
+			}
+		}
+		for (var k in memberCost){
+			memberCost[k] = Math.floor(memberCost[k], 2)
+		}
+		// set metrics
+		$scope.memberCost = memberCost
+		$scope.totalCost = totalCost;
+		$scope.sumPurchases = sumPurchases;
+
+	};
+	$scope.purchases = Purchase.query(function(data){
+		var purchases = $scope.purchases;
+		metricsSetter()
+	});
 
 	$scope.removePurchase = function(purchaseId){
 		delPurchase = new Purchase({})
 		delPurchase.$remove({purchaseId: purchaseId}, function(p, resp){
 			if (!p.error){
-				console.log("No error")
-				$scope.purchases = $scope.purchases.filter(function(v) {return v._id != purchaseId})
+				
+				$scope.purchases = $scope.purchases.filter(function(v) {return v._id != purchaseId});
+				metricsSetter();
 			} else {
 				alert('Could not delete purchase');
 			}
@@ -96,10 +140,14 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 	var initialPayments = function(){
 		var payments = [];
 		members = Member.query(function(data){
-			for (var i=0; i < members.length;i++){
-				payments.push({name: members[i].name, amount: ''})
+			for (var i=0; i < data.length;i++){
+				payments.push({name: data[i].name, amount: ''})
 			}		
+			
+			
 		})
+
+
 		return payments;
 	}
 	
@@ -107,6 +155,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 		title: '',
 		payments: initialPayments()
 	};
+
 	
 	$scope.resetPayments = function(){
 		$scope.purchase.payments = initialPayments()
@@ -167,7 +216,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 	};
 
 }
-function MemberListCtrl($scope, $location, Member){
+function MemberListCtrl($scope, $location, Member, Purchase){
 
 	$scope.members = Member.query();
 
@@ -210,5 +259,51 @@ function MemberListCtrl($scope, $location, Member){
 			})
 			
 		}		
+	};
+	$scope.removeMember = function(memberName, memberId){
+
+
+		if (memberId){
+			console.log("UPARXEI")
+			var purchases = Purchase.query(function(data){
+				
+				var found = false;
+				for (var i in purchases){
+					for (var j in purchases[i].payments){
+						if (purchases[i].payments[j].name == memberName){
+							found = true;
+							break
+						}
+					}
+					if (found){
+						break
+					
+					}
+				}
+
+				if (found){
+					alert('Could not delete this member. '+memberName+' owns some debts.')
+				} else {
+					member = new Member({
+						name: memberName,
+						_id: memberId
+					});
+					console.log(member)
+					member.$remove({_id: memberId}, function(p, resp){
+						if (!p.error){
+							console.log("DONEEE")
+							$scope.members = $scope.members.filter(function(v){return v.name != memberName})
+						}
+					})
+					// member = new
+				}
+				
+
+			})
+		} else {
+
+			console.log("DENNN  UPARXEI")
+			$scope.members = $scope.members.filter(function(v){return v.name != memberName})
+		}
 	}
 }
