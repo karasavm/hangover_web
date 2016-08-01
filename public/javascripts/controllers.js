@@ -4,7 +4,33 @@ function PollListCtrl($scope, Poll) {
 }
 
 function PurchaseListCtrl($scope, Purchase) {
+
 	$scope.purchases = Purchase.query();
+
+	$scope.removePurchase = function(purchaseId){
+
+		purchase = Purchase.get({purchaseId: "579e5f69cd8552c013fe0bae"});
+		newPurchase = new Purchase({})
+		
+
+		newPurchase.$remove({purchaseId: purchaseId}, function(p, resp){
+			if (!p.error){
+				console.log("No error")
+				$scope.purchases = $scope.purchases.filter(function(v) {return v._id != purchaseId})
+			} else {
+				alert('Could not delete purchase');
+			}
+		})
+		
+		// Purchase.remove({_id: "579e20937ce64dd01b61560f"},function(p, resp) {
+		// 	if (!p.error){
+		// 		console.log("done")
+		// 	} else{
+		// 		alert('Could not delete purchase');
+
+		// 	}
+		// })
+	}
 }
 
 // Controller for an individual poll
@@ -39,8 +65,22 @@ function PollItemCtrl($scope, $routeParams, socket, Poll) {
 	};
 }
 
-function PurchaseItemCtrl($scope, $routeParams, socket, Purchase) {	
+function PurchaseItemCtrl($scope, $routeParams, $location, socket, Purchase) {	
 	$scope.purchase = Purchase.get({purchaseId: $routeParams.purchaseId});
+	$scope.updatePurchase = function(){
+		console.log($scope.purchase)
+		var newPurchase = new Purchase($scope.purchase);
+				
+		// Call API to save poll to the database
+		newPurchase.$update(function(p, resp) {
+			if(!p.error) {
+				// If there is no error, redirect to the main view
+				$location.path('purchases');
+			} else {
+				alert('Could not create purchase');
+			}
+		});
+	}
 }
 
 // Controller for creating a new poll
@@ -54,6 +94,7 @@ function PollNewCtrl($scope, $location, Poll) {
 	
 	// Method to add an additional choice option
 	$scope.addChoice = function() {
+
 		$scope.poll.choices.push({ text: '' });
 	};
 	
@@ -108,7 +149,9 @@ function PurchaseNewCtrl($scope, $location, Purchase) {
 
 	// Method to add an additional choice option
 	$scope.addChoice = function() {
+		console.log("prim")
 		$scope.purchase.payments.push({ name: '', amount: 0 });
+		console.log("meta")
 	};
 	
 	// Validate and save the new poll to the database

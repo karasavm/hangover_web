@@ -136,6 +136,32 @@ exports.createP = function(req, res, next) {
 	});
 };
 
+exports.updateP = function(req, res, next){
+	Purchase.findById(req.params.id, function(err, purchase){
+		if (err){
+			console.log(err)
+			return next(err)
+		} else{
+			console.log(purchase)
+			res.json(purchase)
+		}
+		console.log(purchase)
+	})
+};
+exports.deleteP = function(req, res, next){
+	console.log("DELEEEETEEE")
+	Purchase.remove({_id: req.params.id}, function(err){
+		if (err){
+			console.log(err)
+			return next(err)
+		} else{
+			res.json({message: "ok"})
+		}
+		
+	})
+};
+
+
 
 exports.vote = function(socket) {
 	socket.on('send:vote', function(data) {

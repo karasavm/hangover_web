@@ -35,6 +35,8 @@ app.post('/vote', routes.vote);
 
 app.get('/purchases/purchases', routes.listP);
 app.get('/purchases/:id', routes.purchase);
+app.put('/purchases/:id', routes.updateP);
+app.del('/purchases/:id', routes.deleteP);
 app.post('/purchases', routes.createP);
 // app.post('/vote', routes.vote);
 
