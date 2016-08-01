@@ -19,6 +19,7 @@
 		<li><em>No polls in databases. Would you like to <a href="#/newP">create one</a>?</li>
 	</ul>
 	<ol ng-switch-default>
+		
 		<li ng-repeat="purchase in purchases | filter:query">
 			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
 			<button type="button" class="btn btn-default" ng-click="removePurchase(purchase._id)"><span class="glyphicon glyphicon-minus"></span></button>

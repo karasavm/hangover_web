@@ -1,3 +1,6 @@
+addChoice = function(scope) {
+		scope.purchase.payments.push({ name: '', amount: 0 });
+};
 // Controller for the poll list
 function PollListCtrl($scope, Poll) {
 	$scope.polls = Poll.query();
@@ -78,32 +81,11 @@ function PurchaseItemCtrl($scope, $routeParams, $location, socket, Purchase) {
 				alert("Unable to Update purchase.")
 			}
 		})
-		// var purchase = Purchase.get({purchaseId: $routeParams.purchaseId}, function(){
-		// 	purchase.title = $scope.purchase.title;
-		// 	purchase.payments = $scope.purchase.payments;
-		// 	console.log(purchase)
-		// 	purchase.$save(function(p, resp){
-		// 		if (!p.error){
-		// 			$location.path('purchases');		
-		// 		} else {
-		// 			alert("Unable to Update purchase.")
-		// 		}
-		// 	});
-			
-		// });
+	};
 
-		// var newPurchase = new Purchase($scope.purchase);
-				
-		// // Call API to save poll to the database
-		// newPurchase.$save(function(p, resp) {
-		// 	if(!p.error) {
-		// 		// If there is no error, redirect to the main view
-		// 		$location.path('purchases');
-		// 	} else {
-		// 		alert('Could not create purchase');
-		// 	}
-		// });
-	}
+	$scope.addChoice = function(scope) {
+		$scope.purchase.payments.push({ name: '', amount: 0 });
+};
 }
 
 // Controller for creating a new poll
@@ -117,7 +99,6 @@ function PollNewCtrl($scope, $location, Poll) {
 	
 	// Method to add an additional choice option
 	$scope.addChoice = function() {
-
 		$scope.poll.choices.push({ text: '' });
 	};
 	
@@ -171,10 +152,8 @@ function PurchaseNewCtrl($scope, $location, Purchase) {
 	
 
 	// Method to add an additional choice option
-	$scope.addChoice = function() {
-		console.log("prim")
+	$scope.addChoice = function(scope) {
 		$scope.purchase.payments.push({ name: '', amount: 0 });
-		console.log("meta")
 	};
 	
 	// Validate and save the new poll to the database
