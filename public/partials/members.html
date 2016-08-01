@@ -26,9 +26,9 @@
 
 	<div class="form-group">
 		<div ng-repeat="member in members">
-			
+			<label>Member {{$index+1}}</label>	
 			<div class="input-group">
-				<label>Member {{$index+1}}</label>	
+				
 			   <input type="text" class="form-control" ng-model="member.name" placeholder="Insert name">
 			   <span class="input-group-btn">
 			        <button class="btn btn-default" type="button" ng-click="removeMember(member.name, member._id)"><span class="glyphicon glyphicon-minus"> Delete</button>
