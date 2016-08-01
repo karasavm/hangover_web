@@ -55,8 +55,9 @@
 				<input type="text" ng-model="purchase.title" class="form-control" id="purchaseTitel" placeholder="Enter purchase title">
 				</div>
 
+				<label><em>Payments</em></label>
 				<div class="form-group">
-					<label><em>Payments</em></label>
+					
 
 					<div ng-repeat="payment in purchase.payments">
 						<label> {{payment.name}}</label>
@@ -66,8 +67,9 @@
 						   <span class="input-group-btn">
 						        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
 						   </span>
+
 						</div>
-						 
+						 <br>
 			        </div>
 			        <br>
 				    <div class="row">
