@@ -1,0 +1,6 @@
+1. less empty boxes on new purchase list
+2. check number inserted
+3. otan eimai sto purchase list kai ginei post apo postman na kanee auto update
+4. ena member mporei na vgei mono an den xrostaei
+5. valid email check
+6. svisimo member otan den exei agora sto onoma tou

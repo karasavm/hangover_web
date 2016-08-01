@@ -5,9 +5,13 @@
 	<div class="col-xs-5">
 		<a href="#/newP" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Purchase</a>
 	</div>
+	<div class="col-xs-5">
+		<a href="#/member" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Members</a>
+	</div>
+	<!-- 
 	<div class="col-xs-7">
 		<input type="text" class="form-control" ng-model="query" placeholder="Search for a Purchase">
-	</div>
+	</div> -->
 </div>
 <div class="row">
 	<div class="col-xs-12"><hr></div>
@@ -16,10 +20,10 @@
 
 <div class="row" ng-switch on="purchases.length">
 	<ul ng-switch-when="0">
-		<li><em>No polls in databases. Would you like to <a href="#/newP">create one</a>?</li>
+		<li><em>No purchases in database. Would you like to <a href="#/newP">create one</a>?</li>
 	</ul>
 	<ol ng-switch-default>
-		
+
 		<li ng-repeat="purchase in purchases | filter:query">
 			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
 			<button type="button" class="btn btn-default" ng-click="removePurchase(purchase._id)"><span class="glyphicon glyphicon-minus"></span></button>

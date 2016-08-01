@@ -15,6 +15,8 @@ var Poll = db.model('polls', PollSchema);
 var PurchaseSchema = require('../models/Purchase.js').PurchaseSchema;
 var Purchase = db.model('purchases', PurchaseSchema);
 
+var MemberSchema = require('../models/Member.js').MemberSchema
+var Member = db.model('members', MemberSchema);
 
 // Main application view
 exports.index = function(req, res) {
@@ -164,42 +166,40 @@ exports.deleteP = function(req, res, next){
 	})
 };
 
+exports.listMember = function(req, res, next){
+	Member.find(function(err, members){
+		if (err){
+			return next(err)
+		}
+		res.json(members)
+	})
+};
+exports.createMember = function(req, res, next){
 
-
-exports.vote = function(socket) {
-	socket.on('send:vote', function(data) {
-		var ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address.address;
-		
-		Poll.findById(data.poll_id, function(err, poll) {
-			var choice = poll.choices.id(data.choice);
-			choice.votes.push({ ip: ip });
-			
-			poll.save(function(err, doc) {
-				var theDoc = { 
-					question: doc.question, _id: doc._id, choices: doc.choices, 
-					userVoted: false, totalVotes: 0 
-				};
-
-				// Loop through poll choices to determine if user has voted
-				// on this poll, and if so, what they selected
-				for(var i = 0, ln = doc.choices.length; i < ln; i++) {
-					var choice = doc.choices[i]; 
-
-					for(var j = 0, jLn = choice.votes.length; j < jLn; j++) {
-						var vote = choice.votes[j];
-						theDoc.totalVotes++;
-						theDoc.ip = ip;
-
-						if(vote.ip === ip) {
-							theDoc.userVoted = true;
-							theDoc.userChoice = { _id: choice._id, text: choice.text };
-						}
-					}
-				}
-				
-				socket.emit('myvote', theDoc);
-				socket.broadcast.emit('vote', theDoc);
-			});			
-		});
+	console.log("CREATEEEEEEEE")
+	// Create poll model from built up poll object
+	var member = new Member({
+		name: req.body.name
+	});
+	
+	console.log(member)
+	// Save poll to DB
+	member.save(function(err, doc) {
+		if(err) {
+			return next(err)
+		} else {
+			res.json(doc);
+		}		
 	});
 };
+
+exports.updateMember = function(req, res, next){
+	console.log(req.body)
+	Member.update({_id: req.body._id}, req.body, function(err, data){
+		if (err) {
+			return next(err);
+		}
+		res.json({message: "ok"})	
+	})
+	
+}
