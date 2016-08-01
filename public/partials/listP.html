@@ -50,7 +50,7 @@
 		    <tbody>
 		      <tr ng-repeat="(key, value) in memberCost">
 		        <td>{{key}}</td>
-		        <td>{{value}}</td>
+		        <td ng-style='setBalanceColor(value)'><b>{{value}}</b></td>
 		        
 		      </tr>
 		    </tbody>

@@ -1,7 +1,7 @@
 
 function PurchaseListCtrl($scope, Purchase) {
 
-	$scope.isCollapsed = false;
+	
 
 	var metricsSetter = function(){
 		var purchases = $scope.purchases;
@@ -57,6 +57,13 @@ function PurchaseListCtrl($scope, Purchase) {
 				alert('Could not delete purchase');
 			}
 		})
+	}
+	$scope.setBalanceColor = function(v){
+		console.log("xrwwww "+v)
+		if (v < 0)
+			return {color: "red"}
+		else
+			return {color: "green"}
 	}
 }
 
