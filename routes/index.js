@@ -137,7 +137,10 @@ exports.createP = function(req, res, next) {
 };
 
 exports.updateP = function(req, res, next){
-	Purchase.findById(req.params.id, function(err, purchase){
+	console.log("EFTASE UPDATE")
+	console.log(req.body)
+
+	Purchase.update({_id: req.params.id}, req.body, function(err, purchase){
 		if (err){
 			console.log(err)
 			return next(err)
@@ -149,7 +152,7 @@ exports.updateP = function(req, res, next){
 	})
 };
 exports.deleteP = function(req, res, next){
-	console.log("DELEEEETEEE")
+	
 	Purchase.remove({_id: req.params.id}, function(err){
 		if (err){
 			console.log(err)

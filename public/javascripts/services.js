@@ -6,10 +6,13 @@ angular.module('pollServices', ['ngResource']).
 			query: { method: 'GET', params: { pollId: 'polls' }, isArray: true }
 		})
 	}).
+
 	factory('Purchase', function($resource) {
-		return $resource('purchases/:purchaseId', {}, {
+		return $resource('purchases/:purchaseId', {}, 
+		{
 			// Use this method for getting a list of polls
-			query: { method: 'GET', params: { purchaseId: 'purchases' }, isArray: true }
+			query: { method: 'GET', params: { purchaseId: 'purchases' }, isArray: true },
+			update : {method: 'PUT'}
 		})
 	}).
 	
