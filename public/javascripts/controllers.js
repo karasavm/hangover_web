@@ -71,7 +71,13 @@ function PurchaseItemCtrl($scope, $routeParams, $location, socket, Purchase) {
 		
 		purchase = new Purchase($scope.purchase)
 		
-		Purchase.update({purchaseId: $routeParams.purchaseId}, $scope.purchase)
+		Purchase.update({purchaseId: $routeParams.purchaseId}, $scope.purchase, function(p, resp){
+			if (!p.error){
+				$location.path('purchases');		
+			} else {
+				alert("Unable to Update purchase.")
+			}
+		})
 		// var purchase = Purchase.get({purchaseId: $routeParams.purchaseId}, function(){
 		// 	purchase.title = $scope.purchase.title;
 		// 	purchase.payments = $scope.purchase.payments;
