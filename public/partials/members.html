@@ -31,7 +31,7 @@
 				
 			   <input type="text" class="form-control" ng-model="member.name" placeholder="Insert name">
 			   <span class="input-group-btn">
-			        <button class="btn btn-default" type="button" ng-click="removeMember(member.name, member._id)"><span class="glyphicon glyphicon-minus"> Delete</button>
+			        <button class="btn btn-danger" type="button" ng-click="removeMember(member.name, member._id)"><span class="glyphicon glyphicon-minus"> Delete</button>
 			   </span>
 			</div>
 			<br>
@@ -46,7 +46,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<button type="button" class="btn btn-default" ng-click="addMember()"><span class="glyphicon glyphicon-plus"></span> Add Member</button>
-			<button type="button" class="btn btn-default" ng-click="resetMembers()"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+			<button type="button" class="btn btn-default" ng-click="resetMembers()"><span class="glyphicon glyphicon-refresh"></span> Undo</button>
 		</div>
 	</div>
 	

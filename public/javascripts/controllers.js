@@ -61,10 +61,24 @@ function PurchaseListCtrl($scope, Purchase) {
 		}
 		console.log(balanceMembers)
 		console.log(expensesMembers)
+
+		// rounding
+		rounding = 100;
+		
+		for (var k in balanceMembers){
+			balanceMembers[k] = Math.round(balanceMembers[k]*rounding)/rounding;
+		}
+		for (var k in expensesMembers){
+			expensesMembers[k] = Math.round(expensesMembers[k]*rounding)/rounding;
+		}
+		for (var k in totalPurchaseCost){
+			totalPurchaseCost[k] = Math.round(totalPurchaseCost[k]*rounding)/rounding;
+		}
+
 		$scope.memberCost = balanceMembers
 		$scope.expensesMembers = expensesMembers
 		$scope.sumPurchases = totalPurchaseCost
-		$scope.totalCost = totalCost;
+		$scope.totalCost = Math.round(totalCost*rounding)/rounding;
 	}
 
 
