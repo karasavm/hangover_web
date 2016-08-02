@@ -43,21 +43,21 @@
 		    <thead>
 		      <tr>
 		        <th>Name</th>
-		        <th>Balance</th>
-		        <th>Expenses</th>
+		        <th>Balance (€)</th>
+		        <th>Expenses (€)</th>
 		        
 		      </tr>
 		    </thead>
 		    <tbody>
 		      <tr ng-repeat="(key, value) in memberCost">
 		        <td>{{key}}</td>
-		        <td ng-style='setBalanceColor(value)'><b>{{value}} €</b></td>
-		        <td>{{expensesMembers[key]}} €</td>
+		        <td ng-style='setBalanceColor(value)'><b>{{value}}</b></td>
+		        <td>{{expensesMembers[key]}}</td>
 		      </tr>
 		    </tbody>
 		    <thead>
 		      <tr>
-		        <th> Total Expenses: <em>{{totalCost}} €</em></th>
+		        <th> Total Expenses: <em>{{totalCost}}€</em></th>
 		        <th></th>
 		        <th></th>
 		        
@@ -80,7 +80,7 @@
 			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</a>
 			
 		
-			<b>{{purchase.title}} - <em>{{sumPurchases[purchase.title]}} euros</em></b> 
+			<b>{{purchase.title}} - <em>{{sumPurchases[purchase.title]}}€</em></b> 
 			
 		</li>
 		</div>

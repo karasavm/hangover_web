@@ -41,13 +41,13 @@
 			   <span class="input-group-btn">
 
 			   			<div ng-show="purchase.payments[$index].amount < 0">
-			   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">Excluded</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
+			   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
 			   			</div>
 			   			<div ng-show="purchase.payments[$index].amount == '-'"> 
-			   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">Excluded</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
+			   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
 			   			</div>
         				<div ng-show="purchase.payments[$index].amount >= 0"> 
-        					<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-success" type="button">Included</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
+        					<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
         				</div>
 
 
