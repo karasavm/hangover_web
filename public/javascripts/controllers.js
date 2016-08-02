@@ -33,7 +33,7 @@ function PurchaseListCtrl($scope, Purchase) {
 			}
 		}
 		for (var k in memberCost){
-			memberCost[k] = Math.floor(memberCost[k], 2)
+			memberCost[k] = Math.round(memberCost[k]);
 		}
 		// set metrics
 		$scope.memberCost = memberCost

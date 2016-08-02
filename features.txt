@@ -4,3 +4,5 @@
 4. ena member mporei na vgei mono an den xrostaei
 5. valid email check
 6. svisimo member otan den exei agora sto onoma tou
+7. unique member names
+8. fortwma ths selida. deixnei prwta auta pou einai me mhden kai meta ta upoloipa. argei sta queries
