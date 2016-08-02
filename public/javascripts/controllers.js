@@ -1,8 +1,77 @@
 
 function PurchaseListCtrl($scope, Purchase) {
 
-	
+	// ---------new--------------	
+	var metricsSetter2 = function(){
+		var purchases = $scope.purchases;
 
+		var balanceMembers = {};
+		var expensesMembers = {};
+		var totalPurchaseCost = {};
+
+		// initialize dictionaries 
+		for (i in purchases){
+			for (j in purchases[i].payments){
+				balanceMembers[purchases[i].payments[j].name] = 0;
+				expensesMembers[purchases[i].payments[j].name] = 0;
+			}
+		}
+
+		// calculate totalPurchaseCost
+		for (i in purchases){
+			totalPurchaseCost[purchases[i].title] = 0;
+			for (j in purchases[i].payments){
+				totalPurchaseCost[purchases[i].title] += Math.abs(purchases[i].payments[j].amount)
+			}
+		}
+
+		// calculate expenses and balance
+		for (i in purchases){
+			purchase = purchases[i];
+			// console.log(purchase.title)
+			tot = totalPurchaseCost[purchase.title];
+			numPayments = purchase.payments.length;
+			// console.log(tot);
+			// console.log(numPayments);
+			negNames = [];
+			posNames = [];
+			for (j in purchase.payments){
+				payment = purchase.payments[j];
+				if (payment.amount < 0){
+					negNames.push(payment)
+				} else{
+					posNames.push(payment)
+				}
+			}
+			if (posNames.length == 0){
+				alert("ERRROOORRRR. ONLY NEGATIVE AMOUNTS ON PURCHASE "+purchase.title)
+				break
+			}
+			portion = tot/posNames.length
+			for (i in posNames){
+				expensesMembers[posNames[i].name] += portion
+				balanceMembers[posNames[i].name] += posNames[i].amount - portion 
+			}
+
+			for (i in negNames){
+				balanceMembers[negNames[i].name] += Math.abs(negNames[i].amount)
+			}	
+		}
+		console.log(balanceMembers)
+		console.log(expensesMembers)
+		$scope.memberCost = balanceMembers
+		$scope.expensesMembers = expensesMembers
+		$scope.sumPurchases = totalPurchaseCost
+	}
+
+
+	// console.log(balanceMembers)
+	// console.log(expensesMembers)
+	// console.log(totalPurchaseCost)
+
+
+
+	// ---------old--------------
 	var metricsSetter = function(){
 		var purchases = $scope.purchases;
 		
@@ -36,14 +105,14 @@ function PurchaseListCtrl($scope, Purchase) {
 			memberCost[k] = Math.round(memberCost[k]);
 		}
 		// set metrics
-		$scope.memberCost = memberCost
-		$scope.totalCost = totalCost;
-		$scope.sumPurchases = sumPurchases;
+		// $scope.memberCost = memberCost
+		// $scope.totalCost = totalCost;
+		// $scope.sumPurchases = sumPurchases;
 
 	};
 	$scope.purchases = Purchase.query(function(data){
 		var purchases = $scope.purchases;
-		metricsSetter()
+		metricsSetter2()
 	});
 
 	

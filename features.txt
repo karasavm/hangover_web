@@ -7,3 +7,4 @@
 7. unique member names
 8. fortwma ths selida. deixnei prwta auta pou einai me mhden kai meta ta upoloipa. argei sta queries
 9. Synolo pou ksodepse o kathenas ston pinaka debts
+10. undo instead of reset
