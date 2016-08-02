@@ -49,19 +49,22 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<button type="button" class="btn btn-default" ng-click="addRestMembers()"><span class="glyphicon glyphicon-plus"></span> Rest Members</button>
+			<button type="button" class="btn btn-default" ng-click="addRestMembers()"><span class="glyphicon glyphicon-refresh"></span> Reset Fields</button>
 		</div>
 	</div>
 
 	<p><hr></p>
 	
 	<div class="row">
-		<div class="col-xs-6">
-			<a href="#/purchases" class="btn btn-default" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back to Purchase List</a>
+		<div class="col-sm-4">
+			<a href="#/purchases" class="btn btn-default pull-left" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back to Purchase List</a>
 		</div>
-		<div class="col-xs-6">
-			<button class="btn btn-primary pull-right" type="submit">Save &raquo;</button>
+		<div class="col-sm-8">
+			<button class="btn btn-primary pull-right" type="submit">Save Purchase&raquo;</button>
+			<button type="button" class="btn btn-danger pull-right" ng-click="removePurchase(purchase._id)" >Delete Purchase</button>
+
 		</div>
+		
 	</div> 
 	
 	<p>&nbsp;</p>

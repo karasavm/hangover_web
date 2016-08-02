@@ -75,20 +75,14 @@
 		<div class="input-group">
 		<li ng-repeat="purchase in purchases | filter:query">
 			
-			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> </a>
-			<button type="button" class="btn btn-default" ng-click="removePurchase(purchase._id)"><span class="glyphicon glyphicon-minus"></span> </button>
+			<a href="#/purchase/{{purchase._id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+			
 		
 			<b>{{purchase.title}} - <em>{{sumPurchases[$index]}} euros</em></b> 
 			
 		</li>
 		</div>
-		<!-- <div class="input-group">
-							
-						   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
-						   <span class="input-group-btn">
-						        <button class="btn btn-default" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Delete</button>
-						   </span>
-		</div> -->
+		
 
 
 	</ol>
