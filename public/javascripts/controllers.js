@@ -145,6 +145,10 @@ function PurchaseListCtrl($scope, Purchase) {
 
 function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {	
 	
+	$scope.testtext = function(){
+		console.log("fdsff")
+		return 1
+	}
 	// included button
 	$scope.toggleIncluded = function(){
 		if ($scope.toggleText) {
@@ -164,7 +168,7 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 		var payments = [];
 		members = Member.query(function(data){
 			for (var i=0; i < data.length;i++){
-				payments.push({name: data[i].name, amount: ''})
+				payments.push({name: data[i].name, amount: '', amountSign: 1})
 			}		
 			
 			
@@ -174,7 +178,18 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 		return payments;
 	}
 
-	$scope.purchase = Purchase.get({purchaseId: $routeParams.purchaseId});
+	$scope.purchase = Purchase.get({purchaseId: $routeParams.purchaseId}, function(data){
+		for (i in data.payments){
+			console.log(data.payments[i])
+			sign = Math.sign(data.payments[i].amount)
+			if (sign==0)
+				sign = 1
+			data.payments[i].amountSign = sign
+			data.payments[i].amount = Math.abs(data.payments[i].amount)
+		}
+		console.log(data)
+	});
+	
 	
 	// console.log($scope.purchase)
 	$scope.removePurchase = function(){
@@ -198,6 +213,10 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 	$scope.updatePurchase = function(){
 		
 		purchase = $scope.purchase
+
+		for (i in purchase.payments){
+			purchase.payments[i].amount = Math.abs(purchase.payments[i].amount)*purchase.payments[i].amountSign
+		}
 		
 		if(purchase.title.length > 0) {
 		// 	// Loop through the choices, make sure at least two 
@@ -256,7 +275,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 		var payments = [];
 		members = Member.query(function(data){
 			for (var i=0; i < data.length;i++){
-				payments.push({name: data[i].name, amount: ''})
+				payments.push({name: data[i].name, amount: '', amountSign: 1})
 			}		
 			
 			
@@ -294,7 +313,9 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 	// Validate and save the new poll to the database
 	$scope.createPurchase = function() {
 		var purchase = $scope.purchase;
-		
+		for (i in purchase.payments){
+			purchase.payments[i].amount = Math.abs(purchase.payments[i].amount)*purchase.payments[i].amountSign
+		}
 		// Check that a question was provided
 
 		if(purchase.title.length > 0) {

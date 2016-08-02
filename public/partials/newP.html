@@ -66,15 +66,18 @@
 						   <input type="text" class="form-control" ng-model="payment.amount" placeholder="0 euros">
 						   <span class="input-group-btn">
 
-								<div ng-show="purchase.payments[$index].amount < 0">
-					   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
+								<div ng-show="purchase.payments[$index].amountSign < 0 && purchase.payments[$index].amount!=0">
+					   				<button ng-click="purchase.payments[$index].amountSign = 1" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
 					   			</div>
-					   			<div ng-show="purchase.payments[$index].amount == '-'"> 
-					   				<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
-					   			</div>
-		        				<div ng-show="purchase.payments[$index].amount >= 0"> 
-		        					<button ng-click="purchase.payments[$index].amount = -1*purchase.payments[$index].amount;" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude </button>
+					   			
+		        				<div ng-show="purchase.payments[$index].amountSign > 0 && purchase.payments[$index].amount!=0"> 
+		        					<button ng-click="purchase.payments[$index].amountSign = -1" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
 		        				</div>
+
+		        				<div ng-show="purchase.payments[$index].amount==0"> 
+		        					<button ng-click="purchase.payments[$index].amountSign = 1" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
+		        				</div>
+		        				
 							</span>
 
 						</div>
