@@ -8,6 +8,7 @@ function PurchaseListCtrl($scope, Purchase) {
 		var balanceMembers = {};
 		var expensesMembers = {};
 		var totalPurchaseCost = {};
+		var totalCost = 0;
 
 		// initialize dictionaries 
 		for (i in purchases){
@@ -17,12 +18,13 @@ function PurchaseListCtrl($scope, Purchase) {
 			}
 		}
 
-		// calculate totalPurchaseCost
+		// calculate totalPurchaseCost and totalCost
 		for (i in purchases){
 			totalPurchaseCost[purchases[i].title] = 0;
 			for (j in purchases[i].payments){
 				totalPurchaseCost[purchases[i].title] += Math.abs(purchases[i].payments[j].amount)
 			}
+			totalCost += totalPurchaseCost[purchases[i].title]
 		}
 
 		// calculate expenses and balance
@@ -62,6 +64,7 @@ function PurchaseListCtrl($scope, Purchase) {
 		$scope.memberCost = balanceMembers
 		$scope.expensesMembers = expensesMembers
 		$scope.sumPurchases = totalPurchaseCost
+		$scope.totalCost = totalCost;
 	}
 
 
@@ -70,6 +73,7 @@ function PurchaseListCtrl($scope, Purchase) {
 	// console.log(totalPurchaseCost)
 
 
+    
 
 	// ---------old--------------
 	var metricsSetter = function(){
@@ -127,6 +131,21 @@ function PurchaseListCtrl($scope, Purchase) {
 
 function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {	
 	
+	// included button
+	$scope.toggleIncluded = function(){
+		if ($scope.toggleText) {
+			if ($scope.toggleText == "Included")
+				$scope.toggleText = "Excluded";
+			else
+				$scope.toggleText = "Included"
+		}else
+			$scope.toggleText = "Included";
+	}
+
+    // $scope.$watch('toggle', function(){
+    //     $scope.toggleText = $scope.toggle ? 'Included' : 'Excluded';
+    // })
+    /////////////////
 	var initialPayments = function(){
 		var payments = [];
 		members = Member.query(function(data){
@@ -232,7 +251,14 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 
 		return payments;
 	}
-	
+	// included button
+	$scope.toggle = true;
+
+    $scope.$watch('toggle', function(){
+        $scope.toggleText = $scope.toggle ? 'Included' : 'Excluded';
+    })
+    /////////////////
+
 	$scope.purchase = {
 		title: '',
 		payments: initialPayments()

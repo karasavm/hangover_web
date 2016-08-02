@@ -43,20 +43,22 @@ x<div class="page-header">
 		    <thead>
 		      <tr>
 		        <th>Name</th>
-		        <th>Balance (euros)</th>
+		        <th>Balance</th>
+		        <th>Expenses</th>
 		        
 		      </tr>
 		    </thead>
 		    <tbody>
 		      <tr ng-repeat="(key, value) in memberCost">
 		        <td>{{key}}</td>
-		        <td ng-style='setBalanceColor(value)'><b>{{value}}</b></td>
-		        
+		        <td ng-style='setBalanceColor(value)'><b>{{value}} €</b></td>
+		        <td>{{expensesMembers[key]}} €</td>
 		      </tr>
 		    </tbody>
 		    <thead>
 		      <tr>
-		        <th> Total Expenses: <em>{{totalCost}} euros</em></th>
+		        <th> Total Expenses: <em>{{totalCost}} €</em></th>
+		        <th></th>
 		        <th></th>
 		        
 		      </tr>
@@ -84,21 +86,10 @@ x<div class="page-header">
 		</div>
 		
 	</ol>
+	
 
-	<ol >
-		poso tous costise
-		<div class="input-group">
-		<li ng-repeat="member in expensesMembers">
-			
-			
-			
-			{{expensesMembers}}
-			
-			
-		</li>
-		</div>
-		
-	</ol>
+
+
 
 
 </div>
