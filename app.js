@@ -43,8 +43,12 @@ app.post('/members', routes.createMember);
 app.get('/members', routes.listMember);
 app.put('/members', routes.updateMember);
 app.del('/members', routes.deleteMember);
-// app.post('/vote', routes.vote);
 
+app.post('/transfers', routes.createTransfer);
+app.get('/transfers', routes.listTransfer);
+app.del('/transfers', routes.deleteTransfer);
+app.put('/transfers', routes.updateTransfer);
+// app.post('/vote', routes.vote);
 
 
 server.listen(app.get('port'), function(){

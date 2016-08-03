@@ -7,6 +7,7 @@ angular.module('purchases', ['purchaseServices']).
 			when('/purchase/:purchaseId', { templateUrl: 'partials/itemP.html', controller: PurchaseItemCtrl }).
 			when('/newP', { templateUrl: 'partials/newP.html', controller: PurchaseNewCtrl }).
 			when('/member', { templateUrl: 'partials/members.html', controller: MemberListCtrl }).
+			when('/transfer', { templateUrl: 'partials/transfers.html', controller: TransferListCtrl }).
 			// If invalid route, just redirect to the main list view
 			otherwise({ redirectTo: '/purchases' });
 	}]);

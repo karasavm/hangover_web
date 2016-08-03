@@ -14,4 +14,11 @@ angular.module('purchaseServices', ['ngResource']).
 			query: { method: 'GET', isArray: true },
 			update : {method: 'PUT'}
 		})
+	}).
+	factory('Transfer', function($resource) {
+		return $resource('transfers', {}, {
+			// Use this method for getting a list of members
+			query: { method: 'GET', isArray: true },
+			update : {method: 'PUT'}
+		})
 	})

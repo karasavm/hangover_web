@@ -1,5 +1,5 @@
 
-function PurchaseListCtrl($scope, Purchase) {
+function PurchaseListCtrl($scope, Purchase, Transfer) {
 
 	// ---------new--------------	
 	var metricsSetter2 = function(){
@@ -59,8 +59,16 @@ function PurchaseListCtrl($scope, Purchase) {
 				balanceMembers[negNames[i].name] += Math.abs(negNames[i].amount)
 			}	
 		}
-		console.log(balanceMembers)
-		console.log(expensesMembers)
+		// console.log(balanceMembers)
+		// console.log(expensesMembers)
+		// Transfers
+
+		for (i in $scope.transfers){
+			transfer = $scope.transfers[i]
+			console.log(transfer)
+			balanceMembers[transfer.from] += transfer.amount
+			balanceMembers[transfer.to] -= transfer.amount
+		}
 
 		// rounding
 		rounding = 100;
@@ -128,9 +136,15 @@ function PurchaseListCtrl($scope, Purchase) {
 		// $scope.sumPurchases = sumPurchases;
 
 	};
-	$scope.purchases = Purchase.query(function(data){
-		var purchases = $scope.purchases;
-		metricsSetter2()
+	$scope.purchases = Purchase.query(function(purchases){
+		$scope.transfers = Transfer.query(function(transfers){
+			
+
+			metricsSetter2()
+		})
+
+		// var purchases = $scope.purchases;
+		
 	});
 
 	
@@ -490,5 +504,83 @@ function MemberListCtrl($scope, $location, Member, Purchase){
 	$scope.resetMembers = function(){
 		$scope.members = Member.query();
 		$scope.removeMembers = [];
+	}
+}
+
+
+function TransferListCtrl($scope, $location, Transfer){
+
+	
+
+	console.log("efata")
+	$scope.transfers = Transfer.query(function(data){
+		console.log(data)
+	});
+
+
+	
+	$scope.addTransfer = function() {
+		$scope.createTransfers.push({ from: '', to: '', amount: 0});
+	};
+
+
+	$scope.removeTransfers = [];
+	$scope.createTransfers = [];
+
+	$scope.updateTransfers = function() {
+		// 1. post new members
+		// 2. update old members
+		// 3. delete some members $scope.removeMembers
+		transfers = $scope.transfers.filter(function(v){return v.from != "" && v.to != "" && v.amount != 0 && v.amount!=""});
+		
+		
+		
+		createTransfers = $scope.createTransfers;
+		
+		// POST new members first
+		for (var i =0; i< createTransfers.length; i++){
+			transfer = new Transfer(createTransfers[i])
+
+			transfer.$save(function(p, resp){
+				if (!p.error){
+					// $location.path('purchases');
+				} else {
+					alert('Could not update transfer list')
+				}
+			})
+			
+		}
+
+		
+
+		// // DELETE members from $scope.removeMembers
+
+		for (var i=0;i<$scope.removeTransfers.length;i++){
+
+			transfer = $scope.removeTransfers[i];
+			transfer.$remove({_id: transfer._id}, function(p, resp){
+				if (!p.error){
+					// $scope.members = $scope.members.filter(function(v){return v.name != memberName})		
+				}
+			})
+
+		}		
+
+		// $scope.removeMember = [];
+		$location.path('purchases');
+	};
+	$scope.removeTransfer = function(transferId){
+		// here we DO NOT really delete a member
+		// just add it to a list in order to delete it where save
+		$scope.removeTransfers.push($scope.transfers.filter(function(v) {return v._id==transferId})[0])
+		$scope.transfers=$scope.transfers.filter(function(v) {return v._id!=transferId})
+	}
+	$scope.undo = function(){
+		
+		for (i in $scope.removeTransfers){
+			$scope.transfers.push($scope.removeTransfers[i])
+		}
+		$scope.removeTransfers = [];
+		$scope.createTransfers = [];
 	}
 }

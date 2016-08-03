@@ -22,6 +22,10 @@ var Purchase = db.model('purchases', PurchaseSchema);
 var MemberSchema = require('../models/Member.js').MemberSchema
 var Member = db.model('members', MemberSchema);
 
+var TransferSchema = require('../models/Transfer.js').transferSchema
+var Transfer = db.model('transfers', TransferSchema);
+
+
 // Main application view
 exports.index = function(req, res) {
 	res.render('index');
@@ -209,7 +213,6 @@ exports.updateMember = function(req, res, next){
 }
 
 exports.deleteMember = function(req, res, next){
-	
 	console.log(req.query._id)
 	Member.remove({_id: req.query._id}, function(err){
 		if (err){
@@ -219,6 +222,54 @@ exports.deleteMember = function(req, res, next){
 			res.json({message: "ok"})
 		}
 		
+	})
+	
+}
+
+exports.createTransfer = function(req, res, next){
+	console.log(req.query._id)
+	transfer = new Transfer(req.body)
+	transfer.save({_id: req.body}, function(err){
+		if (err){
+			console.log(err)
+			return next(err)
+		} else{
+			res.json({message: "ok"})
+		}
+		
+	})
+}
+
+exports.listTransfer = function(req, res, next){
+	console.log("afffffffffff")
+	Transfer.find(function(err, data){
+		if (err){
+			return next(err)
+		}
+		res.json(data)
+	})
+};
+
+exports.deleteTransfer = function(req, res, next){
+	console.log(req.query._id)
+	Transfer.remove({_id: req.query._id}, function(err){
+		if (err){
+			console.log(err)
+			return next(err)
+		} else{
+			res.json({message: "ok"})
+		}
+		
+	})
+}
+
+exports.updateTransfer = function(req, res, next){
+	console.log(req.body)
+	Transfer.update({_id: req.body._id}, req.body, function(err, data){
+		if (err) {
+			return next(err);
+		}
+		res.json({message: "ok"})	
 	})
 	
 }
