@@ -508,13 +508,19 @@ function MemberListCtrl($scope, $location, Member, Purchase){
 }
 
 
-function TransferListCtrl($scope, $location, Transfer){
+function TransferListCtrl($scope, $location, Transfer, Member){
 
 	
-
-	console.log("efata")
+	$scope.toggled = function(open) {
+    console.log("drooop")
+    $log.log('Dropdown is now: ', open);
+  };
+	
 	$scope.transfers = Transfer.query(function(data){
-		console.log(data)
+		$scope.members = Member.query(function(data){
+
+		})
+		
 	});
 
 
@@ -540,14 +546,27 @@ function TransferListCtrl($scope, $location, Transfer){
 		// POST new members first
 		for (var i =0; i< createTransfers.length; i++){
 			transfer = new Transfer(createTransfers[i])
+			foundFrom = false
+			foundTo = false
 
-			transfer.$save(function(p, resp){
-				if (!p.error){
-					// $location.path('purchases');
-				} else {
-					alert('Could not update transfer list')
-				}
-			})
+			for (j in $scope.members){
+			
+				if (createTransfers[i].from == $scope.members[j].name)
+					foundFrom = true
+				if (createTransfers[i].to == $scope.members[j].name)
+					foundTo = true
+			}
+
+			if (foundFrom && foundTo){
+
+				transfer.$save(function(p, resp){
+					if (!p.error){
+						// $location.path('purchases');
+					} else {
+						alert('Could not update transfer list')
+					}
+				})
+			}
 			
 		}
 
@@ -566,7 +585,7 @@ function TransferListCtrl($scope, $location, Transfer){
 
 		}		
 
-		// $scope.removeMember = [];
+		$scope.removeTransfers = [];
 		$location.path('purchases');
 	};
 	$scope.removeTransfer = function(transferId){
