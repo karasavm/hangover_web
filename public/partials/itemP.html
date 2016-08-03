@@ -41,17 +41,19 @@
 			   
 			   <span class="input-group-btn">
 
-			   			<div ng-show="purchase.payments[$index].amountSign < 0 && purchase.payments[$index].amount!=0">
-			   				<button ng-click="purchase.payments[$index].amountSign = 1" class="btn btn-defaule" type="button">No Pay</button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
+			   			<div ng-show="purchase.payments[$index].amountSign < 0">
+			   				<button ng-click="purchase.payments[$index].amountSign = 1" class="btn btn-defaule" type="button">No Pay</button>
+			   				<!-- <button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button> -->
 			   			</div>
 			   			
-        				<div ng-show="purchase.payments[$index].amountSign > 0 && purchase.payments[$index].amount!=0"> 
-        					<button ng-click="purchase.payments[$index].amountSign = -1" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
+        				<div ng-show="purchase.payments[$index].amountSign > 0"> 
+        					<button ng-click="purchase.payments[$index].amountSign = -1" class="btn btn-success" type="button"> Pay </button>
+        					<!-- <button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button> -->
         				</div>
-
+<!-- 
         				<div ng-show="purchase.payments[$index].amount==0"> 
         					<button ng-click="purchase.payments[$index].amountSign = 1" class="btn btn-success" type="button"> Pay </button><button class="btn btn-danger" type="button" ng-click="removePayment(payment.name)"><span class="glyphicon glyphicon-minus"> Exclude</button>
-        				</div>
+        				</div> -->
 
 
 			   </span>
@@ -64,7 +66,7 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<button type="button" class="btn btn-default" ng-click="addRestMembers()"><span class="glyphicon glyphicon-refresh"></span> Reset Fields</button>
+			<button type="button" class="btn btn-default" ng-click="reset()"><span class="glyphicon glyphicon-refresh"></span> Reset Fields</button>
 		</div>
 	</div>
 

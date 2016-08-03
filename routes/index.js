@@ -13,8 +13,7 @@ if (process.env.VCAP_SERVICES) {
 }
 
 // Get Poll schema and model
-var PollSchema = require('../models/Poll.js').PollSchema;
-var Poll = db.model('polls', PollSchema);
+
 
 var PurchaseSchema = require('../models/Purchase.js').PurchaseSchema;
 var Purchase = db.model('purchases', PurchaseSchema);

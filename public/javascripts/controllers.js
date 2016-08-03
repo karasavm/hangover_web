@@ -159,24 +159,7 @@ function PurchaseListCtrl($scope, Purchase, Transfer) {
 
 function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {	
 	
-	$scope.testtext = function(){
-		console.log("fdsff")
-		return 1
-	}
-	// included button
-	$scope.toggleIncluded = function(){
-		if ($scope.toggleText) {
-			if ($scope.toggleText == "Included")
-				$scope.toggleText = "Excluded";
-			else
-				$scope.toggleText = "Included"
-		}else
-			$scope.toggleText = "Included";
-	}
 
-    // $scope.$watch('toggle', function(){
-    //     $scope.toggleText = $scope.toggle ? 'Included' : 'Excluded';
-    // })
     /////////////////
 	var initialPayments = function(){
 		var payments = [];
@@ -184,25 +167,39 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 			for (var i=0; i < data.length;i++){
 				payments.push({name: data[i].name, amount: '', amountSign: 1})
 			}		
-			
-			
 		})
 
 
 		return payments;
 	}
 
-	$scope.purchase = Purchase.get({purchaseId: $routeParams.purchaseId}, function(data){
-		for (i in data.payments){
-			console.log(data.payments[i])
-			sign = Math.sign(data.payments[i].amount)
+	$scope.purchase = Purchase.get({purchaseId: $routeParams.purchaseId}, function(purchase){
+		for (i in purchase.payments){
+			// console.log(data.payments[i])
+			sign = Math.sign(purchase.payments[i].amount)
 			if (sign==0)
 				sign = 1
-			data.payments[i].amountSign = sign
-			data.payments[i].amount = Math.abs(data.payments[i].amount)
+			purchase.payments[i].amountSign = sign
+			purchase.payments[i].amount = Math.abs(purchase.payments[i].amount)
 		}
-		console.log(data)
-	});
+
+		Member.query(function(members){
+			for (var i=0; i < members.length;i++){
+				
+				found = false;
+				for (j in purchase.payments){
+					if (purchase.payments[j].name == members[i].name){
+						found = true
+					}
+				}
+				if (!found){
+					console.log(members[i])
+					purchase.payments.push({name: members[i].name, amount: '', amountSign: -1})
+				}
+					// 
+			}		
+		})
+		});
 	
 	
 	// console.log($scope.purchase)
@@ -227,6 +224,7 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 	$scope.updatePurchase = function(){
 		
 		purchase = $scope.purchase
+		purchase.payments = purchase.payments.filter(function(v){return v.amountSign==1 || v.amount!=0 || v.amount!=''})
 
 		for (i in purchase.payments){
 			purchase.payments[i].amount = Math.abs(purchase.payments[i].amount)*purchase.payments[i].amountSign
@@ -234,7 +232,7 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 		
 		if(purchase.title.length > 0) {
 		// 	// Loop through the choices, make sure at least two 
-			if (purchase.payments.length >= 2){
+			if (purchase.payments.length >= 1){
 
 				zeroPayments = 0
 				for (var i=0; i< purchase.payments.length;i++){
@@ -252,6 +250,7 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 							$location.path('purchases');		
 						} else {
 							alert("Could not Update purchase.")
+							$scope.reset()
 						}
 					})
 
@@ -262,24 +261,26 @@ function PurchaseItemCtrl($scope, $routeParams, $location, Purchase, Member) {
 						}
 					}
 					alert('You must enter at least one non zero amount.');
+					$scope.reset()
 				}
 			} else {
 				alert('You must enter at least two people.');
+				$scope.reset()
 			}
 		} else {
 			alert('You must enter a title.');
+			$scope.reset()
 		}
 
 	};
 
-	$scope.addRestMembers = function(){
+	$scope.reset = function(){
 		$scope.purchase.payments = initialPayments()
 	}
 
 	$scope.removePayment = function(name){
 		$scope.purchase.payments = $scope.purchase.payments.filter(function(v){return v.name!=name})
 	}
-	
 }
 
 function PurchaseNewCtrl($scope, $location, Purchase, Member) {
@@ -290,9 +291,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 		members = Member.query(function(data){
 			for (var i=0; i < data.length;i++){
 				payments.push({name: data[i].name, amount: '', amountSign: 1})
-			}		
-			
-			
+			}			
 		})
 
 
@@ -321,12 +320,16 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 	}
 	// Method to add an additional choice option
 	$scope.addChoice = function(scope) {
-		$scope.purchase.payments.push({ name: '', amount: 0 });
+		$scope.purchase.payments.push({ name: '', amount: '' });
 	};
 	
 	// Validate and save the new poll to the database
 	$scope.createPurchase = function() {
-		var purchase = $scope.purchase;
+		var purchase = $scope.purchase
+		
+		// console.log(purchase.payments)
+		purchase.payments = purchase.payments.filter(function(v){return v.amountSign==1 || v.amount!=0 || v.amount!=''})
+		
 		for (i in purchase.payments){
 			purchase.payments[i].amount = Math.abs(purchase.payments[i].amount)*purchase.payments[i].amountSign
 		}
@@ -334,7 +337,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 
 		if(purchase.title.length > 0) {
 		// 	// Loop through the choices, make sure at least two 
-			if (purchase.payments.length >= 2){
+			if (purchase.payments.length >= 1){
 
 				zeroPayments = 0
 				for (var i=0; i< purchase.payments.length;i++){
@@ -353,6 +356,7 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 							$location.path('purchase');
 						} else {
 							alert('Could not create purchase');
+							$scope.resetPayments()
 						}
 					});
 
@@ -363,12 +367,15 @@ function PurchaseNewCtrl($scope, $location, Purchase, Member) {
 						}
 					}
 					alert('You must enter at least one non zero amount.');
+					$scope.resetPayments()
 				}
 			} else {
 				alert('You must enter at least two people.');
+				$scope.resetPayments()
 			}
 		} else {
 			alert('You must enter a title.');
+			$scope.resetPayments()
 		}
 	};
 
